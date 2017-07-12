@@ -1,0 +1,24 @@
+<IfModule mod_headers.c>
+  Header unset Connection
+  Header unset Time-Zone
+  Header unset Keep-Alive
+  Header unset Access-Control-Allow-Origin
+  Header unset Access-Control-Allow-Headers
+  Header unset Access-Control-Expose-Headers
+  Header unset Access-Control-Allow-Methods
+  Header unset Access-Control-Allow-Credentials
+
+  Header set   Connection                         keep-alive
+  Header set   Time-Zone                          "Europe/Madrid"
+  Header set   Keep-Alive                         timeout=100,max=500
+  Header set Access-Control-Allow-Origin "*"
+  Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization,Location"
+  Header set Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
+  Header set DNT "0"
+  Header set Accept-Ranges "bytes"
+  Header set Vary "Accept-Encoding"
+  Header set X-UA-Compatible "IE=edge,chrome=1"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Xss-Protection "1; mode=block"
+</IfModule>

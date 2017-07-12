@@ -648,7 +648,7 @@ app.config(['dialogsProvider','$translateProvider',function(dialogsProvider,$tra
 			IMG_UP:'Choose image',
 			DONT_GET_IMAGE_URL: 'It could not get the picture. If there are no connectivity problems, it is probably not allowed by CORS protection.If you can not enable correct headers, download the image, then use upload image option.',
 			IMAGE_SO_BIG: 'A good idea is to compress before to mark (https://compressor.io). This image is too large to publish on some of the allowed social networks',
-			NO_FILES_1: 'Unknowned problem uploading the file',
+			NO_FILES_1: 'Unknown problem uploading the file',
 			NO_FILES_2: 'The file is empty',
 			BROWSER_DONT_LET: 'ERROR: Browser have not allowed to be opened a window',
 			TWITTER_ERR1: 'ERROR Twitter authenticating ',
