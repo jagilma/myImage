@@ -1,0 +1,171 @@
+$icon-font-path: "../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
+// bower:scss
+@import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body {
+  padding: 0;
+}
+
+/* Tab title */
+
+.md-tab-item-label {
+    color: black;
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: capitalize;
+}
+
+.md-tab-item-label-separator {
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-box-flex: 0 1 auto;
+    -webkit-flex: 0 1 auto;
+    flex: 0 1 auto;
+    height: 1px;
+    min-width: 0;
+    position: relative;
+    top: 12px;
+    width: 68px;
+    margin-left: 10px;
+}
+
+.md-tab-item-index {
+    background-color: black;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-box-flex: 0 0 auto;
+    -webkit-flex: 0 0 auto;
+    flex: 0 0 auto;
+    font-size: 12px;
+    font-weight: 500;
+    height: 24px;
+    line-height: 24px;
+    position: relative;
+    text-align: center;
+    width: 24px;
+    color: white;
+    margin-right: 10px;
+}
+
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 10px;
+
+  /* Make the masthead heading the same height as the navigation */
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+  }
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+
+  .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
+}
+
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+
+  p + h4 {
+    margin-top: 28px;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+/*MIOS*/
+.cropArea {
+    background: #E4E4E4;
+    overflow: hidden;
+    width:500px;
+    height:350px;
+}
+.dropArea {    
+    height:118px;
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 236px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dropArea2 {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 236px;
+    height: 75px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+form .progress {
+    line-height: 15px;
+}
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}

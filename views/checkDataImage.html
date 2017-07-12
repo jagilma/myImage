@@ -1,0 +1,134 @@
+<div ng-app="myImageApp" ng-controller="modelCtrl" ng-model="dataSavedOnLocalStorage" class="tabsdemoDynamicHeight">   
+<table st-table="displayedDataImages" st-safe-src="dataSavedOnLocalStorage" id="dataImagesTable"  
+	   class="table table-striped" cellspacing="0" width="100%">
+	 <thead> <!--ng-init="show=true;"  ng-if="dataSavedOnLocalStorage" ng-model="dataSavedOnLocalStorage"-->
+		 <tr>
+	      	<td st-sort="name" style="text-align: left;" width="25%" st-ratio="30" ><label>{{ 'NAME_TABLE' | translate }}</label></td> <!--width="5%", width="45%", width="25%", width="15%", width="15%",width="15%" -->
+    	  	<td st-sort="text" style="text-align: left;" width="40%"  st-ratio="50" ><label>{{ 'MODALFORM_OP1' | translate }}</label></td>
+      		<td st-sort="key"  style="text-align: left;" width="10%"  st-ratio="5" ><label>{{ 'MODALFORM_OP2' | translate }}</label></td>
+	      	<td st-sort="method" style="text-align: left;" width="10%" st-ratio="5" ><label>{{ 'METHOD_TEXT' | translate }}</label></td>
+    	  	<td st-sort="publish" style="text-align: left;" width="10%" st-ratio="5" ><label>{{ 'PUBLISH_DATA' | translate }}</label></td>
+			<td style="text-align: right;"st-ratio="5" ><label>{{ 'ACTIONS_TABLE' | translate }}</label></td>
+		 </tr>
+	    <tr>
+				<th colspan="5">
+					<input st-search placeholder="{{ 'SEARCHING_FILE' | translate }}..." class="input-sm form-control" type="search"/>
+				</th>
+				<th style="text-align: right;">
+           		<a href="/myImage/#/import" ><img ng-src="/images/upload.png" title="{{ 'IMPORT_TOOLTIP' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'SAVEALL_TOOLTIP' | translate }}" width="15" height="15"></a>		   				      	
+				<img ng-src="/images/two-databases.png" title="{{ 'EXPORT_TOOLTIP' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'DELETE_BUTTON' | translate }}" ng-click="exportAll()" width="15" height="15">
+				<img ng-src="/images/borrarBD.png" title="{{ 'DELETEALL_TOOLTIP' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'DELETE_BUTTON' | translate }}" ng-click="dataSavedOnLocalStorage=clearAll()" width="15" height="15">
+				<img ng-src="/images/copy.png" ng-hide="checked" title="{{ 'SELECT_ALL' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'SELECT_ALL' | translate }}" ng-click="switchCheck(!checked,dataSavedOnLocalStorage,'historico')" width="15" height="15"> 
+				<img ng-src="/images/copy.png" ng-hide="!checked" title="{{ 'DESELECT_ALL' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'DESELECT_ALL' | translate }}" ng-click="switchCheck(!checked,dataSavedOnLocalStorage,'historico')" width="15" height="15">
+				</th>
+	 	</tr>
+    </thead>
+	<tbody ng-if="!displayedDataImages">
+        <tr>
+          <td colspan="6">Loading ...</td>
+        </tr>
+    </tbody>
+    <tbody>
+    <tr ng-repeat="image in displayedDataImages track by $index" ng-if="image.name"> <!--| orderBy: 'name' track by $index-->
+        <td colspan="1" width="25%" style="text-align: left;" st-ratio="25">
+			<input type="checkbox" checklist-model="getSelectedImages()" checklist-value="image" ng-change="check(image, checked,'historico')">
+			{{image.name}}
+			<div data-title="'imageContent'">
+				 <img class="img-responsive" ng-src="{{image.data}}" width="90" height="69"><br/>
+			</div>
+		</td>
+		<td colspan="5" width="75%" st-ratio="75">
+			<table ng-if="image" ng-init="show=true" st-table="image" class="table">
+				<tr ng-repeat="cypherData in image.encryptedData" ng-if="cypherData.message">
+					<td style="text-align: left;" width="30%" st-ratio="50">{{cypherData.message | limitTo:100 }}</td>
+					<td style="text-align: left;" width="10%" st-ratio="5"><div ng-hide="show" >{{cypherData.password}}</div>
+						<img ng-src="/images/visible-opened-eye-interface-option.png" width="30" height="23" tooltip="database" ng-show="show" ng-class="{'icon ion-play': !play, 'icon ion-pause': play}" ng-click="show=!show">
+						<img ng-src="/images/invisible.png" tooltip="database" width="30" height="23" ng-show="!show" ng-class="{'icon ion-play': !play, 'icon ion-pause': play}" ng-click="show=!show">
+						<!-- <button tooltip="database" ng-show="show" type="submit" class="glyphicon glyphicon-eye-open" ng-class="{'icon ion-play': !play, 'icon ion-pause': play}" ng-click="show=!show">	</button>        
+						<button tooltip="database" ng-show="!show" type="submit" class="glyphicon glyphicon-eye-close" ng-class="{'icon ion-play': !play, 'icon ion-pause': play}" ng-click="show=!show">	</button>-->
+					</td> 
+					<td style="text-align: left;" width="10%" st-ratio="5">{{cypherData.method}}</td>
+					<td style="text-align: left;" width="10%" st-ratio="5">
+						<div ng-show="cypherData.twitter[0]"> 
+							<!--<label ng-show="cypherData.twitter">Twitter</label>-->
+							<img class="img-responsive" title="{{ 'TWEET_TOOLTIP' | translate }}" data-toggle="popover" 
+							  data-placement="bottom" alt="{{ 'TWITTER_BUTTON' | translate }}" ng-src="/images/Twitter_Logo_Blue.png" width="30" height="23">
+						</div> 
+						<div ng-show="cypherData.pinterest[0]"> 
+							<img class="img-responsive" title="{{ 'PINTEREST_TOOLTIP' | translate }}" data-toggle="popover" 
+							  data-placement="bottom" alt="{{ 'PINT_BUTTON' | translate }}" ng-src="/images/pinterest.png" width="20" height="18">
+						</div>
+						<div ng-show="cypherData.flickr[0]"> 
+							<img class="img-responsive" title="{{ 'FLICKR_TOOLTIP' | translate }}" data-toggle="popover" 
+							  data-placement="bottom" alt="{{ 'FLICKR_BUTTON' | translate }}" ng-src="/images/flickr.png" width="20" height="18">
+						</div>  
+						<div ng-show="cypherData.facebook[0]"> 
+							<img class="img-responsive" title="{{ 'FACEBOOK_TOOLTIP' | translate }}" data-toggle="popover" 
+							  data-placement="bottom" alt="{{ 'FB_BUTTON' | translate }}" ng-src="/images/facebook.png" width="20" height="18">
+						</div> 
+						<!--<table ng-if="cypherData" ng-init="show=true" st-table="cypherData" class="table">
+							<tr ng-repeat="twitter in cypherData.twitter" ng-if="twitter.tweet">
+								<td>{{twitter.tweet}}</td>
+								<td>{{twitter.url}}</td>
+								<td>{{twitter.date}}</td>
+							</tr>
+						</table>-->	
+					<!--</td>
+					<td style="text-align: left;" st-ratio="5" ng-show="cypherData.saved">-->
+						<div ng-show="cypherData.saved[0]"> 
+							<!--<label>Saved on local disk</label>-->
+							<img class="img-responsive" title="{{ 'SAVED_TOOLTIP' | translate }}" data-toggle="popover" 
+							  data-placement="bottom" alt="{{ 'SAVED_BUTTON' | translate }}" ng-src="/images/guardarNuevo.png" width="15" height="12">
+						</div>					
+						<!--<table ng-if="cypherData" ng-init="show=true" st-table="cypherData" class="table">
+							<tr ng-repeat="saved in cypherData.saved" ng-if="saved.name">
+								<td>{{saved.name}}</td>
+								<td>{{twitter.date}}</td>
+							</tr>
+						</table>-->
+					</td>
+					<td style="text-align: right;" width="5%"  st-ratio="5">
+							<img style="float: right;" class="img-responsive" title="{{ 'TWITTER_TOOLTIP' | translate }}" data-toggle="popover" ng-disabled="image.encriptedData.length<0" ng-click="showFormTW(image,'historico')"
+							data-placement="bottom" alt="{{ 'TWITTER_BUTTON' | translate }}" ng-src="/images/Twitter_Logo_Blue.png" width="15" height="15">
+							<br>
+							<img style="float: right;" class="img-responsive" title="{{ 'PINTEREST_TOOLTIP' | translate }}" data-toggle="popover" ng-disabled="image.encriptedData.length<0" ng-click="showFormPint(image,'historico')"
+							data-placement="bottom" alt="{{ 'PINT_BUTTON' | translate }}" ng-src="/images/pinterest.png" width="15" height="15">
+							<br>
+							<img style="float: right;" class="img-responsive" title="{{ 'FLICKR_TOOLTIP' | translate }}" data-toggle="popover" ng-disabled="image.encriptedData.length<0" ng-click="showFormFlickr(image,'historico')"
+							data-placement="bottom" alt="{{ 'FLICKR_BUTTON' | translate }}" ng-src="/images/flickr.png" width="15" height="15">
+							<br>
+							<img style="float: right;" class="img-responsive" title="{{ 'FACEBOOK_TOOLTIP' | translate }}" data-toggle="popover" ng-disabled="image.encriptedData.length<0" ng-click="showFormFB(image,'historico')"
+							data-placement="bottom" alt="{{ 'FB_BUTTON' | translate }}" ng-src="/images/facebook.png" width="15" height="15">
+							<br>
+							<img style="float: right;" class="img-responsive" title="{{ 'SAVE_TOOLTIP' | translate }}" data-toggle="popover" ng-disabled="image.encriptedData.length<0" ng-click="saveImageToDisk(image)"
+							data-placement="bottom" alt="{{ 'SAVE_BUTTON' | translate }}" ng-src="/images/guardarNuevo.png" width="15" height="15" > 
+							<br>
+							<img style="float: right;" ng-src="/images/info-solid-circular-button.png" title="{{ 'INFO_TOOLTIP' | translate }}" data-toggle="popover" ng-click="infoImage(image,cypherData)"
+							data-placement="bottom" alt="{{ 'INFO_BUTTON' | translate }}" width="15" height="15">
+							<!--<button ng-click='toggleModal()'>{{'INFO_BUTTON' | translate}}</button>-->							
+							<br>  
+							<img style="float: right;" ng-src="/images/garbage.png" title="{{ 'DELETE_TOOLTIP' | translate }}" data-toggle="popover" ng-click="deleteImage(image,'historico')"
+							data-placement="bottom" alt="{{ 'DELETE_BUTTON' | translate }}" width="15" height="15">
+					</td>
+				</tr>
+			</table>
+        <!--
+			<td st-ratio="50">{{image.encryptedData[0].message }}</td>
+        	<td st-ratio="5"><div ng-hide="show" >{{image.encryptedData[0].password}}</div>
+				<button tooltip="database" ng-show="show" type="submit" class="glyphicon glyphicon-eye-open" ng-class="{'icon ion-play': !play, 'icon ion-pause': play}" ng-click="show=!show">	</button>        
+				<button tooltip="database" ng-show="!show" type="submit" class="glyphicon glyphicon-eye-close" ng-class="{'icon ion-play': !play, 'icon ion-pause': play}" ng-click="show=!show">	</button>
+			  </td> 
+        	<td st-ratio="5">{{image.encryptedData[0].method}}</td>
+		-->
+	    </td>		
+    </tr>
+    </tbody>
+	<tfoot>
+			<tr>
+				<td colspan="7" class="text-center">
+						<div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+				</td>
+			</tr>
+	</tfoot>
+</table>
+</div>

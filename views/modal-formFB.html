@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h3>{{ 'MODALFORM_FB_MSG' | translate }}</h3>
+</div>
+<form name="form.userForm" ng-submit="submitFormFB($parent.dataImage)" novalidate>
+    <md-content class="md-padding" layout-padding>
+            <md-input-container class="md-block" flex>
+                <label>{{ 'MODALFORM_OP1' | translate }}</label>
+                <input type="text" name="text" ng-model="userForm.text" value="{{$parent.image.message}}" md-maxlength="500" minlength="4" required>
+                <div ng-show="userForm.text==''" ng-message="required">This is required!</div>
+                <div ng-show="userForm.text==''" ng-message="md-maxlength">That's too long!</div>
+                <div ng-show="userForm.text==''" ng-message="minlength">That's too short!</div>
+            </md-input-container>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-disabled="form.userForm.$invalid">{{ 'OK_BUTTON' | translate }}</button>
+            <button class="btn btn-warning" ng-click="cancel()">{{ 'CANCEL_BUTTON' | translate }}</button>
+        </div>
+    </md-content>
+</form>

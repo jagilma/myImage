@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/toastr/toastr.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css" />
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="bower_components/ngprogress-lite/ngprogress-lite.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/wizard.css">
+    <!-- endbuild -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/myImage/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/myImage/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/myImage/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/myImage/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/myImage/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/myImage/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/myImage/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/myImage/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/myImage/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/myImage/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/myImage/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/myImage/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/myImagefavicon-16x16.png">
+    <link rel="manifest" href="/myImage/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="shortcut icon" href="/myImage/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/myImage/favicon.ico" type="image/x-icon">
+  </head>
+  <body ng-app="myImageApp">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="header">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="#/">myImage</a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#/myImageEncode">{{ 'ENCODE' | translate }}</a></li>
+              <li class="active"><a href="#/myImageDecode">{{ 'DECODE' | translate }}</a></li>
+              <!--<li><a ng-href="#/history">{{ 'HISTORY' | translate }}</a></li>-->
+              <li><a ng-href="http://mundoerrante.net/yo/">{{ 'CONTACT' | translate }}</a></li>
+              <li><a ng-href="#/about">{{ 'ABOUT' | translate }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+    <div ng-view=""></div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        
+      </div>
+    </div>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <script>
+  		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	  ga('create', 'UA-53289413-2', 'auto');
+  	  ga('send', 'pageview');
+	 </script>
+    
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-base64/angular-base64.js"></script>
+    <script src="bower_components/toastr/toastr.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-dialog-service/dist/dialogs.js"></script>
+    <script src="bower_components/angular-dialog-service/dist/dialogs-default-translations.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/ngprogress-lite/ngprogress-lite.js"></script>
+    <script src="bower_components/checklist-model/checklist-model.js"></script>
+    <script src="bower_components/angular-indexedDB/angular-indexed-db.js"></script>
+    <!--<script src="bower_components/angularLocalStorage/dist/angularLocalStorage.min.js"></script>-->
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+    <!-- endbower -->    
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+       <script src="scripts/controllers/pinterest.js"></script>	
+       <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/myimage.js"></script>
+        <script src="scripts/controllers/myimageDecode.js"></script>
+        <script src="scripts/controllers/upload.js"></script>        
+        <script src="scripts/controllers/steganography.js"></script>
+	     <script src="scripts/aes/aes.js"></script>
+       <script src="scripts/hash/md5.js"></script>
+	     <script src="scripts/hash/sha512.js"></script>
+	     <script src="scripts/hash/hmac-sha512.js"></script>
+	     <script src="scripts/bwizard.js" type="text/javascript"></script>
+       <script src="scripts/smart-table.js" type="text/javascript"></script>       
+	     <script src="scripts/controllers/oauth.js"></script>
+       <!--<script src="scripts/canvas-viewer/canvasviewer.min.worker.js"></script>-->
+       <script src="bower_components/watermark/dist/jquery.watermark.min.js"></script>
+       <!--<script src="bower_components/ngstorage/ngStorage.min.js"></script> -->
+        <!-- endbuild -->
+</body>
+</html>

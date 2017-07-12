@@ -1,0 +1,143 @@
+<style>
+    #mdialTamanio .modal-body{
+      width: 100% !important;
+      overflow-x: scroll;
+    }
+</style>
+<div class="modal-dialog" id="mdialTamanio">
+  <div class="modal-header">
+      <h3>{{ name }}</h3>
+  </div>
+  <form name="form.userForm" novalidate>
+    <div class="modal-body" >
+          <div class="form-group">
+              <label>Fecha:</label> <label>{{ date }}</label><br>
+              <label>HASH:</label><br>
+              <label>{{ hash }}</label>
+          </div>
+          <div class="form-group">
+              <label>Previsualización:</label><br>
+              <div data-title="'imageContent'">
+                <img class="img-responsive" ng-src="{{data}}" width="90" height="69"><br/>
+              </div>
+          </div>
+          <div class="form-group">
+              <table st-table="encryptedData" id="encrypDataImagesTable" class="table table-striped" cellspacing="0" width="100%">
+                <thead> <!--ng-init="show=true;"  ng-if="dataSavedOnLocalStorage" ng-model="dataSavedOnLocalStorage"-->
+                <tr>
+                      <td st-sort="text" style="text-align: left;" width="60%"  st-ratio="50" ><label>{{ 'MODALFORM_OP1' | translate }}</label></td>
+                      <td st-sort="key"  style="text-align: left;" width="20%"  st-ratio="5" ><label>{{ 'MODALFORM_OP2' | translate }}</label></td>
+                      <td st-sort="method" style="text-align: left;" width="20%" st-ratio="5" ><label>{{ 'METHOD_TEXT' | translate }}</label></td>
+                </tr>
+                </thead>
+                <tr> <!--| orderBy: 'name' track by $index-->
+                  <td colspan="1" width="60%" style="text-align: left;" st-ratio="60">
+                    {{encryptedData.message}}
+                  </td>
+                  <td colspan="1" width="20%" style="text-align: left;" st-ratio="20">
+                    {{encryptedData.password}}
+                  </td>
+                  <td colspan="1" width="20%" style="text-align: left;" st-ratio="20">
+                    {{encryptedData.method}}
+                  </td>
+                </tr>
+                <tr ng-show="encryptedData.saved[0]">
+                      <td colspan='2' st-sort="text" style="text-align: left;" width="80%"  st-ratio="80" ><label>Nombre en disco local</label></td>
+                      <td st-sort="key"  style="text-align: left;" width="20%"  st-ratio="20" ><label>Fecha descarga</label></td>
+                </tr>
+                <tr ng-show="encryptedData.saved[0]" ng-repeat="p in encryptedData.saved track by $index"> <!--| orderBy: 'name' track by $index-->
+                  <td colspan="2" width="70%" style="text-align: left;" st-ratio="70">
+                    {{p.name}}
+                  </td>
+                  <td colspan="1" width="30%" style="text-align: left;" st-ratio="30">
+                    {{p.date}}
+                  </td>
+                </tr>
+                <tr ng-show="encryptedData.twitter[0]">
+                      <td st-sort="text" style="text-align: left;" width="40%"  st-ratio="40" ><label>Texto tuit</label></td>
+                      <td st-sort="key"  style="text-align: left;" width="10%"  st-ratio="10" ><label>Fecha Publicación</label></td>
+                      <td st-sort="url" style="text-align: left;" width="50%" st-ratio="50" ><label>URL</label></td>
+                </tr>
+
+                <tr ng-show="encryptedData.twitter[0]" ng-repeat="p in encryptedData.twitter track by $index"> <!--| orderBy: 'name' track by $index-->
+                  <td colspan="1" width="40%" style="text-align: left;" st-ratio="40">
+                    {{p.tweet}}
+                  </td>
+                  <td colspan="1" width="10%" style="text-align: left;" st-ratio="10">
+                    {{p.date}}
+                  </td>
+                  <td colspan="1" width="50%" style="text-align: left;" st-ratio="50">
+                    {{p.url}}
+                  </td>
+                </tr>
+                <tr ng-show="encryptedData.facebook[0]">
+                      <td st-sort="text" style="text-align: left;" width="40%"  st-ratio="40" ><label>Mensaje Post</label></td>
+                      <td st-sort="key"  style="text-align: left;" width="10%"  st-ratio="10" ><label>Fecha Publicación</label></td>
+                      <td st-sort="id" style="text-align: left;" width="50%" st-ratio="50" ><label>ID</label></td>
+                      <td st-sort="idPost" style="text-align: left;" width="50%" st-ratio="50" ><label>Post-ID</label></td>
+                </tr>
+
+                <tr ng-show="encryptedData.facebook[0]" ng-repeat="p in encryptedData.facebook | orderBy: 'id' track by $index">
+                  <td colspan="1" width="40%" style="text-align: left;" st-ratio="40">
+                    {{p.message}}
+                  </td>
+                  <td colspan="1" width="10%" style="text-align: left;" st-ratio="10">
+                    {{p.date}}
+                  </td>
+                  <td colspan="1" width="50%" style="text-align: left;" st-ratio="50">
+                    {{p.id}}
+                  </td>
+                  <td colspan="1" width="50%" style="text-align: left;" st-ratio="50">
+                    {{p.post-id}}
+                  </td>
+                </tr>
+                <tr ng-show="encryptedData.pinterest[0]">
+                      <td st-sort="text" style="text-align: left;" width="40%"  st-ratio="40" ><label>Note</label></td>
+                      <td st-sort="key"  style="text-align: left;" width="10%"  st-ratio="10" ><label>Fecha Publicación</label></td>
+                      <td st-sort="id" style="text-align: left;" width="50%" st-ratio="50" ><label>ID</label></td>
+                      <td st-sort="idPost" style="text-align: left;" width="50%" st-ratio="50" ><label>URL</label></td>
+                </tr>
+
+                <tr ng-show="encryptedData.pinterest[0]" ng-repeat="p in encryptedData.pinterest | orderBy: 'id' track by $index">
+                  <td colspan="1" width="40%" style="text-align: left;" st-ratio="40">
+                    {{p.note}}
+                  </td>
+                  <td colspan="1" width="10%" style="text-align: left;" st-ratio="10">
+                    {{p.date}}
+                  </td>
+                  <td colspan="1" width="50%" style="text-align: left;" st-ratio="50">
+                    {{p.id}}
+                  </td>
+                  <td colspan="1" width="50%" style="text-align: left;" st-ratio="50">
+                    {{p.url}}
+                  </td>
+                </tr>
+                <tr ng-show="encryptedData.flickr[0]">
+                      <td st-sort="text" style="text-align: left;" width="40%"  st-ratio="40" ><label>Título</label></td>
+                      <td st-sort="key"  style="text-align: left;" width="10%"  st-ratio="10" ><label>Fecha Publicación</label></td>
+                      <td st-sort="id" style="text-align: left;" width="50%" st-ratio="50" ><label>Descripción</label></td>
+                      <td st-sort="idPost" style="text-align: left;" width="50%" st-ratio="50" ><label>ID</label></td>
+                </tr>
+
+                <tr ng-show="encryptedData.flickr[0]" ng-repeat="p in encryptedData.flickr | orderBy: 'id' track by $index">
+                  <td colspan="1" width="40%" style="text-align: left;" st-ratio="40">
+                    {{p.title}}
+                  </td>
+                  <td colspan="1" width="10%" style="text-align: left;" st-ratio="10">
+                    {{p.date}}
+                  </td>
+                  <td colspan="1" width="50%" style="text-align: left;" st-ratio="50">
+                    {{p.description}}
+                  </td>
+                  <td colspan="1" width="50%" style="text-align: left;" st-ratio="50">
+                    {{p.id_resp}}
+                  </td>
+                </tr>
+              </table>  
+        </div>
+    </div>
+    <div class="modal-footer">
+          <button class="btn btn-warning" ng-click="cancel()">{{ 'CLOSE_BUTTON' | translate }}</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h3>{{ 'MODALFORM_FLICKR_MSG' | translate }}</h3>
+</div>
+<form name="form.userForm" ng-submit="submitFormFlickr($parent.dataImage)" novalidate>
+    <md-content class="md-padding" layout-padding>
+        <md-input-container class="md-block" flex>
+            <label>{{ 'MODALFORM_FLICKR_OP1' | translate }}</label>
+            <input type="text" name="description" ng-model="userForm.description" md-maxlength="500" minlength="4" value="{{$parent.image.message}}" required>
+            <div ng-show="userForm.description==''" ng-message="required">This is required!</div>
+            <div ng-show="userForm.description==''" ng-message="md-maxlength">That's too long!</div>
+            <div ng-show="userForm.description==''" ng-message="minlength">That's too short!</div>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+            <label>{{ 'MODALFORM_FLICKR_OP2' | translate }}</label>
+            <input type="text" name="title" ng-model="userForm.title" md-maxlength="500" minlength="4" value="{{$parent.image.message}}" required>
+            <div ng-show="userForm.title==''" ng-message="required">This is required!</div>
+            <div ng-show="userForm.title==''" ng-message="md-maxlength">That's too long!</div>
+            <div ng-show="userForm.title==''" ng-message="minlength">That's too short!</div>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+            <label>{{ 'MODALFORM_FLICKR_OP3' | translate }}</label>
+            <input type="text" name="tags" ng-model="userForm.tags" ng-maxlength="300">
+            <div ng-show="userForm.tags==''" ng-message="md-maxlength">That's too long!</div>
+        </md-input-container>
+        <label>{{ 'MODALFORM_FLICKR_OP4' | translate }}</label>
+        <md-input-container class="md-block" flex>
+                <md-checkbox name="is_public" ng-model="userForm.is_public">
+                    {{ 'MODALFORM_FLICKR_OP5' | translate }}
+                </md-checkbox>
+                <md-checkbox name="is_friend" ng-model="userForm.is_friend">
+                    {{ 'MODALFORM_FLICKR_OP6' | translate }}
+                </md-checkbox>
+                <md-checkbox name="is_family" ng-model="userForm.is_family">
+                    {{ 'MODALFORM_FLICKR_OP7' | translate }}
+                </md-checkbox>
+        </md-input-container>
+           <!-- <div>
+                <label>{{ 'MODALFORM_FLICKR_OP8' | translate }}</label>
+                <input type="checkbox" name="hidden" class="form-control" ng-model="userForm.hidden">
+            </div>-->
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-disabled="form.userForm.$invalid">{{ 'OK_BUTTON' | translate }}</button>
+            <button class="btn btn-warning" ng-click="cancel()">{{ 'CANCEL_BUTTON' | translate }}</button>
+        </div>
+    </md-content>
+</form>
+
+    						

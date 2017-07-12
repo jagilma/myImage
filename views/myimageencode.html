@@ -1,0 +1,269 @@
+<!--<form name="formImageData" ng-model="modelCtrl" class="css-form" novalidate>-->
+ <div ng-app="myImageApp" ng-controller="modelCtrl" ng-model="images" class="tabsdemoDynamicHeight">
+  <h3>{{ 'ENCODE_H' | translate }} </h3>
+  <div id="wizard" >
+	   <ol>
+				<li>{{ 'SETUP_BUTTON' | translate }}</li>
+				<li>{{ 'FIRST_STEP' | translate }}</li>
+				<li>{{ 'SIGN_BUTTON' | translate }}</li>
+				<li>{{ 'SAVE_BUTTON' | translate }}</li>
+				<!--<li>{{ 'SAVE_HISTORY' | translate }}</li>-->
+		</ol>
+  		<div>
+				<p>{{'ADVICE_MSG' | translate }}</p>
+				<div id="my-tab-content" class="tab-content">
+		        <div class="tab-pane active" id="setup" >
+					<uib-tabset class="tab-container" active="active">
+						<uib-tab index="0" heading="{{'ENCODE_TYPE1' | translate }}">
+							<uib-tab-heading>{{'ENCODE_TYPE1' | translate }}</uib-tab-heading>
+							<md-content md-theme="docs-dark" class="md-padding" layout-padding>
+								<form id="checkCodigoForm" method="post" class="tab-form-demo">
+										<md-input-container class="md-block" flex-gt-sm>
+												<label>{{ 'MODALFORM_OP1' | translate }}</label>
+												<input type="text" name="imagesSetUP.message" class="form-control" ng-model="imagesSetUP.message" value="{{imagesSetUP.message}}" required>
+												<p ng-show="form.userForm.text.$invalid && !form.userForm.text.$pristine" class="help-block">Text is required.</p>
+										</md-input-container>
+										<md-input-container class="md-block" flex-gt-sm>
+												<label>{{ 'MODALFORM_OP2' | translate }}</label>
+												<input type="text" name="imagesSetUP.password" class="form-control" ng-model="imagesSetUP.password" ng-minlength="3" ng-maxlength="50" value="{{imagesSetUP.password}}" required>
+												<p ng-show="form.userForm.password.$error.minlength" class="help-block">Password is too short.</p>
+												<p ng-show="form.userForm.password.$error.maxlength" class="help-block">Password is too long.</p>
+										</md-input-container>
+										<md-input-container class="md-block" flex-gt-sm>
+												<label>{{ 'MODALFORM_OP3' | translate }}</label>
+												<md-select name="imagesSetUP.method" ng-model="imagesSetUP.method" required>
+													<md-option value="">{{ 'MODALFORM_OP3_SELECT' | translate }}</md-option>
+													<md-option ng-repeat="cryptographicFunction in cryptographicFunctions" value="{{cryptographicFunction.method}}">{{cryptographicFunction.method}}</md-option>
+												</md-select>
+										</md-input-container>
+								</form>						
+							</md-content>
+						</uib-tab>
+						<uib-tab index="1" heading="{{'ENCODE_TYPE2' | translate }}">
+							<uib-tab-heading>{{'ENCODE_TYPE2' | translate }}</uib-tab-heading>
+							<md-content md-theme="docs-dark" class="md-padding" layout-padding>									
+									<div layout="row" >
+											<md-input-container class="md-block" flex="40" flex-gt-sm>
+												<div ngf-drop ngf-select="getMark(file)" ng-model="file" class="dropArea2" 
+													ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
+													accept="image/*" 
+													ngf-pattern="'image/*'">Drop a image here or click to upload						 
+												</div>
+											</md-input-container>
+											<md-input-container class="md-block" flex="30" flex-gt-sm ng-show="imagesSetUP.watermarkImage.name !== ''">
+													<!--<label> {{ 'IMGUPLOADED' | translate }}: </label>-->
+													<img class="img-responsive" ng-src="{{imagesSetUP.watermarkImage.name}}"/>
+											</md-input-container>
+									</div>
+									<div layout="colum">
+										<md-input-container class="md-block" flex="60" flex-gt-sm>
+											<label>{{ 'MODALFORM_OP1' | translate }}</label>
+											<input type="text" name="imagesSetUP.watermarkImage.message" class="form-control" ng-model="imagesSetUP.watermarkImage.message" value="{{imagesSetUP.watermarkImage.message}}" 
+											placeholder="{{ 'WATERMARK_MESSAGE' | translate }}">
+										</md-input-container>
+										<md-input-container flex="20" ng-show="imagesSetUP.watermarkImage.message" flex-gt-sm> <!-- value={{$parent.image.encryptedData[$parent.image.encryptedData-1].watermarkImage.textsize}}-->
+												<label>{{ 'WATERMARK_TEXTSIZE' | translate }}</label>
+												<input type="number" value="12" min="5" max="20" step="1" value="imagesSetUP.watermarkImage.textsize" ng-model="imagesSetUP.watermarkImage.textsize" name="imagesSetUP.watermarkImage.textsize" class="inputSmall">
+										</md-input-container>	
+										<md-input-container flex="20" ng-show="imagesSetUP.watermarkImage.message" flex-gt-sm>
+												<label>{{ 'WATERMARK_TEXTCOLOR' | translate }}</label>
+												<md-select name="imagesSetUP.watermarkImage.textcolor" ng-model="imagesSetUP.watermarkImage.textcolor" required>
+													<md-option value="black">Black</md-option>
+													<md-option value="white">White</md-option>
+												</md-select>
+										</md-input-container>
+									</div>									
+									<div layout="row">
+										<md-input-container flex="40" flex-gt-sm>
+											<label>{{ 'WATERMARK_GRAVITY' | translate }}</label>
+											<md-select name="imagesSetUP.watermarkImage.gravity" ng-model="imagesSetUP.watermarkImage.gravity" required>
+												<md-option ng-repeat="p in positions" value="{{p.value}}">{{p.position}}</md-option>
+											</md-select>
+										</md-input-container>
+										<md-input-container flex="40" flex-gt-sm>
+											<label>{{ 'WATERMARK_OPACITY' | translate }}</label>
+											<input type="number" value="0.7" min="0" max="1" step="0.1" id="imagesSetUP.watermarkImage.opacity" ng-model="imagesSetUP.watermarkImage.opacity" name="imagesSetUP.watermarkImage.opacity" class="inputSmall">
+										</md-input-container>
+										<md-input-container flex="20" flex-gt-sm>
+											<label>{{ 'WATERMARK_MARGIN' | translate }}</label>
+											<input type="number" value="10" id="imagesSetUP.watermarkImage.margin" ng-model="imagesSetUP.watermarkImage.margin" name="imagesSetUP.watermarkImage.margin" class="inputSmall">
+										</md-input-container>											
+									</div>
+							</md-content>							
+						</uib-tab>
+					</uib-tabset>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary" ng-click="saveConfig();nextTab();" ng-disabled="form.userForm.$invalid">{{ 'SAVE_BUTTON' | translate }}</button>
+						<button class="btn btn-warning" ng-click="cancel();nextTab();">{{ 'CANCEL_BUTTON' | translate }}</button>
+					</div>			
+				</div>
+		   	</div>
+	   </div>
+       <div>
+				<p></p>
+				<!--<div id="my-tab-content" class="tab-content">
+		         	<div class="tab-pane active" id="firstStep">
+						<input id="input-21" type="file" accept="image/*" class="file-loading" ng-file-select="onFileSelect($files)" multiple>
+					</div>
+				</div>-->
+				<div id="my-tab-content" class="tab-content" > 
+					 <div ngf-drop ngf-select ng-model="files" class="dropArea" 
+        				ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+        				accept="image/*" 
+        				ngf-pattern="'image/*'">Drop images here or click to upload						 
+					</div>					
+				</div>
+
+		</div>
+		<div>
+				<p></p>
+				<div id="my-tab-content" class="tab-content">
+		         <div class="tab-pane active" id="secondStep" >          
+			         <table class="table table-condensed" align="center">
+					      <thead>
+					      	<td style="text-align: left;" width="15%"><label>{{ 'NAME_TABLE' | translate }}</label></td>
+					      	<td style="text-align: left;" width="65%"><label>{{ 'PREVIEW_TABLE' | translate }}</label></td>
+					      	<td style="text-align: left;" width="20%"><label>{{ 'ACTIONS_TABLE' | translate }}</label>
+							  <img ng-src="/images/copy.png" ng-hide="checked" title="{{ 'SELECT_ALL' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'SELECT_ALL' | translate }}" ng-click="switchCheck(images,'encode')" width="15" height="15">
+							  <img ng-src="/images/copy.png" ng-hide="!checked" title="{{ 'DESELECT_ALL' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'DESELECT_ALL' | translate }}" ng-click="switchCheck(images,'encode')" width="15" height="15">
+							  <img ng-src="/images/edit.png" title="{{'SIGNALL_TOOLTIP' | translate}}" data-toggle="tooltip" data-placement="bottom" alt="{{ 'SIGN_BUTTON' | translate }}" ng-click="signAll()" width="15" height="15">
+							  <img ng-src="/images/garbage.png" title="{{ 'DELETEALL_TOOLTIP' | translate }}" data-toggle="tooltip" data-placement="bottom" alt="{{ 'DELETE_BUTTON' | translate }}" ng-click="deleteAll()" width="15" height="15">
+							</td>
+					      </thead>
+					      <tr ng-repeat="image in images" ng-model="image">
+								<td data-title="'imageDescription'" width="5%" tooltip-placement="top" tooltip="{{image.description}}">
+									<input type="checkbox" checklist-model="getSelectedImages()" checklist-value="$index" ng-change="check($index, 'enconde')">
+									<label>{{image.name | limitTo:20}}</label>
+								</td>
+								<td data-title="'imageContent'" width="75%">
+									<i ng-hide="image.data">No image choosed</i>
+									<!--<img class="file-preview-image" ng-src="{{image.data}}" /><br/> ng-repeat="image in images" ng-src="image.src" alt="{{image.alt}}-->
+									<!--<div ngf-drop ng-model="image" ngf-pattern="image/*"
+										class="cropArea">
+										<img-crop image="image.data  | ngfDataUrl"                 
+											result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+										</img-crop>
+									</div>
+									<div>
+										<img ng-src="{{croppedDataUrl}}" />
+									</div>-->
+									<img id="encryptedContent{{$index}}" name="encryptedContent{{$index}}" class="img-responsive" ng-src="{{image.data}}" width="304" height="236"><br/>
+								</td>					            
+								<td data-title="'Actions'" width="20%" > <!--ng-disabled="image.message=='' || image.message==null"-->
+								<!--<input type="checkbox" checklist-model="getPacientesSeleccionados()" checklist-value="paciente" ng-change="check(paciente, checked)">-->					               
+									<img ng-src="/images/edit.png" title="{{ 'SIGN_BUTTON' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'SIGN_BUTTON' | translate }}" ng-click="signImage(image,$index,true)" width="15" height="15">
+									<img ng-src="/images/settings.png" title="{{ 'SETUP_BUTTON' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'SETUP_BUTTON' | translate }}" ng-click="showForm(image)" width="15" height="15">
+									<img ng-src="/images/garbage.png" title="{{ 'DELETE_BUTTON' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'DELETE_BUTTON' | translate }}" ng-click="deleteImage(image,'otro')" width="15" height="15">
+							</tr>
+						</table>
+					</div>
+			</div>
+		</div>
+		<div> 
+				<p></p>
+				<div id="my-tab-content" class="tab-content">
+		         <div class="tab-pane active" id="thirdStep" >          			
+			         <table class="table table-condensed" align="center">
+					      <thead>
+					      	<td style="text-align: left;" width="15%"><label>{{ 'NAME_TABLE' | translate }}</label></td>
+					      	<td style="text-align: left;" width="65%"><label>{{ 'PREVIEW_TABLE' | translate }}</label></td>
+					      	<td style="text-align: left;" width="20%"><label>{{ 'ACTIONS_TABLE' | translate }}</label>
+					      	</br>
+				            	<img ng-src="/images/copy.png" ng-hide="checked" title="{{ 'SELECT_ALL' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'SELECT_ALL' | translate }}" ng-click="switchCheck(images,'encode')" width="15" height="15">
+				            	<img ng-src="/images/copy.png" ng-hide="!checked" title="{{ 'DESELECT_ALL' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'DESELECT_ALL' | translate }}" ng-click="switchCheck(images,'encode')" width="15" height="15">
+				               <img ng-src="/images/guardarNuevo.png" title="{{ 'SAVEALL_TOOLTIP' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'SAVEALL_TOOLTIP' | translate }}" ng-click="saveAll()" width="15" height="15">
+				               <img ng-src="/images/garbage.png" title="{{ 'DELETEALL_TOOLTIP' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'DELETE_BUTTON' | translate }}" ng-click="deleteAll()" width="15" height="15">		      	
+					      	</td>
+					      </thead>
+					      <tr ng-repeat="image in images" ng-model="image">
+								            <td data-title="'imageDescription'" width="15%" tooltip-placement="top" tooltip="{{image.description}}">
+								            	<input type="checkbox" checklist-model="getSelectedImages()" checklist-value="$index" ng-change="check($index, checked,'enconde')">
+								                <label>{{image.name | limitTo:20 }}</label>
+								            </td>
+				            				<td data-title="encryptedImages" width="65%">
+				            					<i ng-hide="image.encryptedData[image.encryptedData.length-1].encrypted || image.encryptedData[image.encryptedData.length-1].watermarkImage.done">No marked image</i>
+				   								<img id="3SencryptedContent{{$index}}" name="encryptedContent{{$index}}" class="img-responsive" 
+												    ng-src="{{image.encryptedData[image.encryptedData.length-1].encrypted}}"
+													ng-model="image.encryptedData[image.encryptedData.length-1].encrypted"
+													width="304" height="236"/>
+												<img ng-show="image.encryptedData[image.encryptedData.length-1].watermarkImage.done && !image.encryptedData[image.encryptedData.length-1].encrypted" id="encryptedContent{{$index}}" name="encryptedContent{{$index}}" class="img-responsive" 
+												    ng-src="{{image.data}}"
+													ng-model="image.data"
+													width="304" height="236"/>
+												
+												<!--<canvas-viewer id="3SencryptedContent{{$index}}" src="{{image.encryptedData[image.encryptedData.length-1].encrypted}}" options="options"></canvas-viewer>-->
+												<!--<canvas ng-show="false" id="3SencryptedContent{{$index}}" width="578" height="200"> </canvas>-->
+												<br/>
+								            </td>
+								            <td data-title="'Actions'" width="20%" >
+								               <button tooltip="Save image" type="button" ng-disabled="!image.encryptedData[image.encryptedData.length-1].encrypted && ! image.encryptedData[image.encryptedData.length-1].watermarkImage.done" class="btn btn-default" name="saveImageToDisk" ng-click="saveImageToDisk(image)">{{ 'SAVE_BUTTON' | translate }}</button>
+								               <button tooltip="Delete image" type="button" class="btn btn-default" name="deleteImage" ng-click="deleteImage(image,'otro')">{{ 'DELETE_BUTTON' | translate }}</button>											   											   <br>
+											   <button tooltip="Tweet image" id="tweetImage" type="button" class="btn btn-default" name="tweetImage" ng-disabled="!image.encryptedData[image.encryptedData.length-1].encrypted && ! image.encryptedData[image.encryptedData.length-1].watermarkImage.done" ng-click="showFormTW(image,'otro')">
+											   		<img ng-src="/images/Twitter_Logo_Blue.png"  title="{{ 'TWITTER_TOOLTIP' | translate }}" data-toggle="tooltip" data-placement="bottom" alt="{{ 'TW_BUTTON' | translate }}" width="30" height="30"> 
+											   </button>											   
+											   <button id="fb-root" tooltip="FB image" type="button" class="btn btn-default" name="fbImage" ng-disabled="!image.encryptedData[image.encryptedData.length-1].encrypted && ! image.encryptedData[image.encryptedData.length-1].watermarkImage.done" ng-click="showFormFB(image,'otro')">
+											   		<img ng-src="/images/facebook.png"  title="{{ 'FACEBOOK_TOOLTIP' | translate }}" data-toggle="tooltip" data-placement="bottom" alt="{{ 'FB_BUTTON' | translate }}" width="30" height="30">
+											   </button>
+											   <button id="pint-root" tooltip="pinterest image" type="button" class="btn btn-default" name="pintImage" ng-disabled="!image.encryptedData[image.encryptedData.length-1].encrypted && ! image.encryptedData[image.encryptedData.length-1].watermarkImage.done" ng-click="showFormPint(image,'otro')">
+											   		<a data-pin-do="buttonPin" data-pin-tall="true" data-pin-lang="es" data-pin-round="true" 
+													   data-pin-save="false">
+													   <img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" /></a>
+											   </button>
+											   <button id="flickr-root" tooltip="flickr image" type="button" class="btn btn-default" name="flickrImage" ng-disabled="!image.encryptedData[image.encryptedData.length-1].encrypted && ! image.encryptedData[image.encryptedData.length-1].watermarkImage.done" ng-click="showFormFlickr(image,'otro')">
+											   		<a data-pin-do="buttonFlickr" data-pin-tall="true" data-pin-lang="es" data-pin-round="true" 
+													   data-pin-save="false">
+													   <img src="/images/flickr.png" width="30" height="30" /></a>
+											   </button>
+											   <!--<div id="fb-root"></div>-->											  
+								            </td>
+							</tr>
+						</table>
+					</div>
+				</div>
+		</div>
+      <!--
+			<div>
+				<p></p>
+				<div id="my-tab-content" class="tab-content">
+		         <div class="tab-pane active" id="saveHistory" ng-click="setDataToLocalStorage('myMarkedImages')" >   
+		         </div>
+		      </div>
+		   </div>      
+      -->
+    </md-tabs>
+  </md-content>
+</div>
+ 
+ <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '317189348652707',
+      xfbml      : true,
+	  cookie: true, // set sessions cookies to allow your server to access the session?
+      frictionlessRequests: true,
+      oauth: true,
+      version    : 'v2.8'
+    });
+  };
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   window.pAsyncInit = function() {
+        PDK.init({
+            appId: "4869422270277238469", 
+            cookie: true
+        });
+    };
+
+    (function(d, s, id){
+        var js, pjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//assets.pinterest.com/sdk/sdk.js";
+        pjs.parentNode.insertBefore(js, pjs);
+    }(document, 'script', 'pinterest-jssdk'));
+</script>

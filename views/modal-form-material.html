@@ -1,0 +1,83 @@
+<div class="modal-header">
+    <h3>{{ 'MODALFORM_MSG' | translate }}</h3>
+</div>
+<form name="form.userForm" ng-submit="submitForm($parent.dataImage)" novalidate>
+    <uib-tabset class="tab-container" active="active">
+        <uib-tab index="0" heading="{{'ENCODE_TYPE1' | translate }}">
+            <uib-tab-heading>{{'ENCODE_TYPE1' | translate }}</uib-tab-heading>
+                <md-content class="md-padding" layout-padding>
+					<md-input-container class="md-block" >
+							<label>{{ 'MODALFORM_OP1' | translate }}</label>
+							<input type="text" name="text" class="form-control" ng-model="userForm.text" ng-value="{{$parent.image.encryptedData[$parent.image.encryptedData-1].message}}" required>
+							<p ng-show="form.userForm.text.$invalid && !form.userForm.text.$pristine" class="help-block">Text is required.</p>
+					</md-input-container>
+					<md-input-container class="md-block" >
+							<label>{{ 'MODALFORM_OP2' | translate }}</label>
+							<input type="text" name="password" class="form-control" ng-model="userForm.password" ng-minlength="3" ng-maxlength="50" ng-value="{{$parent.image.encryptedData[$parent.image.encryptedData-1].password}}" required>
+							<p ng-show="form.userForm.password.$error.minlength" class="help-block">Username is too short.</p>
+							<p ng-show="form.userForm.password.$error.maxlength" class="help-block">Username is too long.</p>
+					</md-input-container>
+					<md-input-container class="md-block white">
+							<label>{{ 'MODALFORM_OP3' | translate }}</label>
+							<md-select  name="method" ng-model="userForm.method"  data-placeholder="{{ 'MODALFORM_OP3_SELECT' | translate }}" required>
+								<md-option value="">{{ 'MODALFORM_OP3_SELECT' | translate }}</md-option>
+								<md-option ng-repeat="cryptographicFunction in cryptographicFunctions" value="{{cryptographicFunction.method}}">
+									{{cryptographicFunction.method}}
+								</md-option>
+							</md-select>
+					</md-input-container>
+				</md-content>                                                        
+         </uib-tab>
+         <uib-tab index="1" heading="{{'ENCODE_TYPE2' | translate }}">
+                <uib-tab-heading>{{'ENCODE_TYPE2' | translate }}</uib-tab-heading>
+                    <md-content class="md-padding" layout-padding>									
+						<div layout="column" >
+								<input id="fileInput" name="file" type="file" class="ng-hide" accept="image/*"  ng-model="userForm.file" ng-value="{{$parent.image.encryptedData[$parent.image.encryptedData-1].watermarkImage.name}}" class="file-loading" ng-file-image="onFileSelect($files)">
+								<label for="fileInput" class="md-button md-raised md-primary" >{{ 'IMG_UP' | translate }}</label>
+								<div layout="column" ng-show="$parent.image.encryptedData[$parent.image.encryptedData-1].watermarkImage.name !== ''">
+									<label> {{ 'IMGUPLOADED' | translate }}: </label>
+									<img class="img-responsive" ng-src="{{imagesSetUP.watermarkImage.name}}" width="60" height="46"/>
+								</div>
+						</div>
+						<div layout="colum">
+							<md-input-container class="md-block" flex="60" >
+								<label>{{ 'MODALFORM_OP1' | translate }}</label>
+								<input type="text" name="messageWM" class="form-control" ng-model="userForm.messageWM" ng-value="{{$parent.image.encryptedData[$parent.image.encryptedData-1].watermarkImage.message}}">		
+							</md-input-container>
+							<md-input-container flex="20" ng-show="userForm.messageWM">
+									<label>{{ 'WATERMARK_TEXTSIZE' | translate }}</label>
+									<input type="number" min="5" max="30" step="1" ng-value="{{$parent.image.encryptedData[$parent.image.encryptedData-1].watermarkImage.textsize}}" ng-model="userForm.textsize" name="textsize">                                                
+							</md-input-container>	
+							<md-input-container flex="20" ng-show="userForm.messageWM">
+									<label>{{ 'WATERMARK_TEXTCOLOR' | translate }}</label>
+									<md-select name="textcolor" ng-model="userForm.textcolor" ng-value="{{$parent.image.encryptedData[$parent.image.encryptedData-1].watermarkImage.textcolor}}">
+										<md-option value="black">Black</md-option>
+										<md-option value="white">White</md-option>
+									</md-select>
+							</md-input-container>
+						</div>									
+						<div layout="row">
+							<md-input-container flex="40" flex-gt-sm>
+								<label>{{ 'WATERMARK_GRAVITY' | translate }}</label>
+								<md-select name="gravity" ng-model="userForm.gravity" ng-value="{{$parent.image.encryptedData[$parent.image.encryptedData-1].watermarkImage.gravity}}">
+									<md-option ng-repeat="p in positions" value="{{p.value}}">{{p.position}}</md-option>
+								</md-select>
+							</md-input-container>
+							<md-input-container flex="40" flex-gt-sm>
+								<label>{{ 'WATERMARK_OPACITY' | translate }}</label>											
+								<input type="number" ng-value="{{$parent.image.encryptedData[$parent.image.encryptedData-1].watermarkImage.opacity}}" min="0" max="1" step="0.1" id="userForm.opacity" ng-model="userForm.opacity" name="userForm.opacity" class="inputSmall">
+							</md-input-container>
+							<md-input-container flex="20" flex-gt-sm>
+								<label>{{ 'WATERMARK_MARGIN' | translate }}</label>
+								<input type="number" ng-value="{{$parent.image.encryptedData[$parent.image.encryptedData-1].watermarkImage.margin}}" id="userForm.margin" ng-model="userForm.margin" name="userForm.margin" class="inputSmall">
+							</md-input-container>											
+						</div>
+					</md-content>
+          </uib-tab>
+    </uib-tabset>
+    <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" ng-disabled="form.userForm.$invalid">{{ 'OK_BUTTON' | translate }}</button>
+                    <button class="btn btn-warning" ng-click="cancel()">{{ 'CANCEL_BUTTON' | translate }}</button>
+    </div>
+
+ </form>

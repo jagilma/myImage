@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h3>{{ 'MODALFORM_MSG' | translate }}</h3>
+</div>
+<form name="form.userForm" ng-submit="submitForm($parent.dataImage)" novalidate>
+    <uib-tabset class="tab-container" active="active">
+        <uib-tab index="0" heading="{{'ENCODE_TYPE1' | translate }}">
+            <uib-tab-heading>{{'ENCODE_TYPE1' | translate }}</uib-tab-heading>
+                <md-content class="md-padding" layout-padding>
+					<md-input-container class="md-block" >
+							<label>{{ 'MODALFORM_OP1' | translate }}</label>
+							<input type="text" name="text" class="form-control" ng-model="userForm.text" ng-value="{{$parent.image.encryptedData[$parent.image.encryptedData-1].message}}" required>
+							<p ng-show="form.userForm.text.$invalid && !form.userForm.text.$pristine" class="help-block">Text is required.</p>
+					</md-input-container>
+					<md-input-container class="md-block" >
+							<label>{{ 'MODALFORM_OP2' | translate }}</label>
+							<input type="text" name="password" class="form-control" ng-model="userForm.password" ng-minlength="3" ng-maxlength="50" ng-value="{{$parent.image.encryptedData[$parent.image.encryptedData-1].password}}" required>
+							<p ng-show="form.userForm.password.$error.minlength" class="help-block">Username is too short.</p>
+							<p ng-show="form.userForm.password.$error.maxlength" class="help-block">Username is too long.</p>
+					</md-input-container>
+					<md-input-container class="md-block white">
+							<label>{{ 'MODALFORM_OP3' | translate }}</label>
+							<md-select  name="method" ng-model="userForm.method"  data-placeholder="{{ 'MODALFORM_OP3_SELECT' | translate }}" required>
+								<md-option value="">{{ 'MODALFORM_OP3_SELECT' | translate }}</md-option>
+								<md-option ng-repeat="cryptographicFunction in cryptographicFunctions" value="{{cryptographicFunction.method}}">
+									{{cryptographicFunction.method}}
+								</md-option>
+							</md-select>
+					</md-input-container>
+				</md-content>                                                        
+         </uib-tab>
+    </uib-tabset>
+    <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" ng-disabled="form.userForm.$invalid">{{ 'OK_BUTTON' | translate }}</button>
+                    <button class="btn btn-warning" ng-click="cancel()">{{ 'CANCEL_BUTTON' | translate }}</button>
+    </div>
+
+ </form>

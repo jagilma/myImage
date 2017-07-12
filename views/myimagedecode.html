@@ -1,0 +1,122 @@
+<!--<form name="formImageData" ng-model="modelCtrl" class="css-form" novalidate>-->
+ <div ng-app="myImageApp" class="tabsdemoDynamicHeightclass" ng-controller="modelDecodeCtrl"> <!--ng-controller="modelDecodeCtrl">-->
+ <!--<div class="container">-->
+ <h3>{{ 'DECODE_H' | translate }} </h3>
+		<div id="wizard">
+			<ol>
+				<li>{{ 'SETUP_BUTTON' | translate }}</li>
+				<li>{{ 'FIRST_STEP' | translate }}</li>
+				<li>{{ 'CHECK_BUTTON' | translate }}</li>
+				<!--<li>Fin</li>-->
+			</ol>
+			<div>
+				<p>{{'ADVICE_MSG' | translate }}</p>
+				<div id="my-tab-content" class="tab-content">
+		        <div class="tab-pane active" id="setup" >
+			    	<md-content md-theme="docs-dark" class="md-padding" layout-padding>
+						<form id="checkCodigoForm" method="post" class="tab-form-demo">
+								<md-input-container class="md-block" flex-gt-sm>
+										<label>{{ 'MODALFORM_OP1' | translate }}</label>
+										<input type="text" name="imagesSetUP.message" class="form-control" ng-model="imagesSetUP.message" value="{{imagesSetUP.message}}" required>
+										<p ng-show="form.userForm.text.$invalid && !form.userForm.text.$pristine" class="help-block">Text is required.</p>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+										<label>{{ 'MODALFORM_OP2' | translate }}</label>
+										<input type="text" name="imagesSetUP.password" class="form-control" ng-model="imagesSetUP.password" ng-minlength="3" ng-maxlength="50" value="{{imagesSetUP.password}}" required>
+										<p ng-show="form.userForm.password.$error.minlength" class="help-block">Password is too short.</p>
+										<p ng-show="form.userForm.password.$error.maxlength" class="help-block">Password is too long.</p>
+								</md-input-container>
+								<md-input-container class="md-block" flex-gt-sm>
+										<label>{{ 'MODALFORM_OP3' | translate }}</label>
+										<md-select name="imagesSetUP.method" ng-model="imagesSetUP.method" required>
+											<md-option value="">{{ 'MODALFORM_OP3_SELECT' | translate }}</md-option>
+											<md-option ng-repeat="cryptographicFunction in cryptographicFunctions" value="{{cryptographicFunction.method}}">{{cryptographicFunction.method}}</md-option>
+										</md-select>
+								</md-input-container>
+						</form>						
+					</md-content>    
+				</div>		        
+		   	</div>
+			</div>
+			<div>
+				<p></p>
+				<div id="my-tab-content" class="tab-content">					
+					<div id="my-tab-content" class="tab-content" > 
+						<div ngf-drop ngf-select ng-model="files" class="dropArea" 
+							ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+							accept="image/*" 
+							ngf-pattern="'image/*'">Drop images here or click to upload						 
+						</div>					
+					</div>
+					<div align="center">
+						<br><label>{{ 'OR' | translate }}</label><br>
+					</div>
+					<form name="url" ng-model="image"> 
+						<label>URL:</label>
+						<input type="url" name="inputurl" class="form-control" ng-model="image.url" value="{{image.url}}">
+						<div role="alert">
+							<p ng-if='! url.inputurl.$valid'>Enter Valid URL</p>  
+						</div>
+						 <button class="btn btn-warning" ng-disabled="image.url=='' || ! url.inputurl.$valid" ng-click="getFileFromURL(image)">{{ 'UP_BUTTON' | translate }}</button>
+						 
+					</form>
+				</div>
+			</div>
+			<div>
+				<div id="my-tab-content" class="tab-content">
+					<div class="tab-pane active" id="secondStep">
+						<table class="table table-condensed" align="center">
+					      <thead>
+					      	<td style="text-align: left;" width="5%"><label>{{ 'NAME_TABLE' | translate }}</label></td>
+					      	<td style="text-align: left;" width="45%"><label>{{ 'PREVIEW_TABLE' | translate }}</label></td>
+					      	<td style="text-align: left;" width="30%"><label>{{ 'MESSAGE_TABLE_DECODE' | translate }}</label></td>
+					      	<td style="text-align: left;" width="20%"><label>{{ 'ACTIONS_TABLE' | translate }}</label>
+								</br>
+				            	<img ng-src="/images/copy.png" ng-hide="checked" title="{{ 'SELECT_ALL' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'SELECT_ALL' | translate }}" ng-click="switchCheck()" width="15" height="15">
+				            	<img ng-src="/images/copy.png" ng-hide="!checked" title="{{ 'DESELECT_ALL' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'DESELECT_ALL' | translate }}" ng-click="switchCheck()" width="15" height="15">
+					            <img ng-src="/images/magnifying-glass.png" title="{{ 'CHECKALL_TOOLTIP' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'CHECK_BUTTON' | translate }}" ng-click="checkAll()" width="15" height="15">
+				                <img ng-src="/images/garbage.png" title="{{ 'DELETEALL_TOOLTIP' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'DELETE_BUTTON' | translate }}" ng-click="deleteAll()" width="15" height="15">		      	
+					      	</td>
+					      	<!--<td width="10%" style="vertical-align: middle;text-align: left;">
+					      	<button tooltip="Add new image" type="file" class="btn btn-default" name="addImage" ng-file-select="onFileSelect($files)"><i class="glyphicon glyphicon-plus"></i></button>
+					      	</td>-->
+					      </thead>
+					      <tr ng-repeat="image in images" ng-model="image">
+					      <!--<tr>-->
+								            <td data-title="'imageDescription'" width="5%" tooltip-placement="top" tooltip="{{image.description}}">
+								                <input type="checkbox" checklist-model="getSelectedImages()" checklist-value="$index" ng-change="check($index)">
+								                <label>{{image.name | limitTo:20}}</label>
+								            </td>
+				            				<td data-title="'imageContent'" width="45%">
+				            					<i ng-hide="image.data">No image choosed</i>
+				   								<img class="img-responsive" ng-src="{{image.data}}" width="304" height="236"><br/>
+								            </td>
+				  		        				<td data-title="'imageProgress'" width="30%">
+						        					<!--<progress value="{{image.progress}}"></progress>-->
+						        					<div ng-hide="! image.decoded">
+														<img ng-show="image.msgEncrypted!=='' && image.msgEncrypted !== image.message" ng-src="/images/candadoyllave.jpg" title="{{ 'LOCKED' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'LOCKED' | translate }}" width="15" height="15">
+														<img ng-show="image.msgEncrypted!=='' && image.msgEncrypted === image.message" ng-src="/images/desbloqueado.jpg" title="{{ 'UNLOCKED' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'UNLOCKED' | translate }}" width="15" height="15">
+														{{image.message}}
+													</div>
+								            </td>
+								            <td data-title="'Actions'" width="20%" >
+									           <img ng-src="/images/magnifying-glass.png" ng-disabled="image.decoded" title="{{ 'CHECK_BUTTON' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'CHECK_BUTTON' | translate }}" ng-click="checkImage(image,true)" width="15" height="15">
+								               <img ng-src="/images/settings.png" title="{{ 'SETUP_BUTTON' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'SETUP_BUTTON' | translate }}" ng-click="showForm(image)" width="15" height="15">
+								               <img ng-src="/images/garbage.png" title="{{ 'DELETE_BUTTON' | translate }}" data-toggle="popover" data-placement="bottom" alt="{{ 'DELETE_BUTTON' | translate }}" ng-click="deleteImage(image)" width="15" height="15"><!--publishTweet, deleteImage-->
+								            </td>
+							</tr>
+						</table>
+			       </div>
+			    </div>
+		   </div>
+		   <!--<div>
+		   	<div id="my-tab-content" class="tab-content">
+			   	<div class="tab-pane active" id="thirdStep">
+						    <div class="form-group">
+							</div>
+			   	</div>
+		   	</div>
+		   </div>-->
+		</div>
+<!--</div>-->
+</div>

@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h3>{{ 'MODALFORM_PINT_MSG' | translate }}</h3>
+</div>
+<form name="form.userForm" ng-submit="submitFormPint($parent.dataImage)" novalidate>
+    <md-content class="md-padding" layout-padding>
+        <md-input-container class="md-block" flex>
+            <label>{{ 'MODALFORM_PINT_OP1' | translate }}</label>
+            <input type="text" name="board" ng-model="userForm.board" ng-maxlength="300" value="{{$parent.image.message}}" required>
+            <div ng-show="userForm.board==''" ng-message="required">This is required!</div>
+            <div ng-show="userForm.board==''" ng-message="md-maxlength">That's too long!</div>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+            <label>{{ 'MODALFORM_PINT_OP2' | translate }}</label>
+            <input type="text" name="note" ng-model="userForm.note" ng-maxlength="300" value="{{$parent.image.message}}" required>
+            <div ng-show="userForm.note==''" ng-message="required">This is required!</div>
+            <div ng-show="userForm.note==''" ng-message="md-maxlength">That's too long!</div>
+        </md-input-container>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-disabled="form.userForm.$invalid">{{ 'OK_BUTTON' | translate }}</button>
+            <button class="btn btn-warning" ng-click="cancel()">{{ 'CANCEL_BUTTON' | translate }}</button>
+        </div>
+    </md-content>
+</form>
