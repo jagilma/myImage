@@ -1,0 +1,12 @@
+[Configuración_base_datos]
+servidor='localhost'
+bd='bd_myImage'
+to='email adm'
+from='email app'
+usuario='usuario base de datos'
+pass='contraseña'
+apiKeyFlickr = ""
+secretFlickr = ""
+permsFlickr = "write"
+apiKeyTwitter=""
+secretTwitter=""
